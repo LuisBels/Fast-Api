@@ -12,11 +12,11 @@ app = FastAPI()
 #Models
 
 class Person(BaseModel):
-  firts_name = str
-  last_name = str
-  age = int
-  hair_color = Optional[str] = None
-  married = Optional[str] = None
+  firts_name: str
+  last_name: str
+  age: int
+  hair_color: Optional[str] = None
+  married: Optional[bool] = None
   
 
 @app.get("/")
@@ -30,5 +30,5 @@ def cuidades():
 # Request and Response body
 
 @app.post("/person/new")
-def create_person(person: Person = Body(...)):
+def create_person(person: Person = Body()):
   return person
