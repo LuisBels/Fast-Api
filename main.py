@@ -5,7 +5,8 @@ from typing  import Optional
 from pydantic import BaseModel
 
 #FastAPI
-from fastapi import FastAPI, Body, Query
+from fastapi import FastAPI
+from fastapi import Body, Query, Path
 
 app = FastAPI()
 
@@ -47,3 +48,15 @@ def show_person(
   age: int = Query(le=50, ge=18)
 ):
   return {name:age}
+
+#Validaciones: Path Parameters
+
+@app.get("/person/detil/{person_id}")
+def show_person(
+  person_id: int = Path(
+    gt=0,
+    title="This is to path parameters",
+    description="This is my firts parameters"
+    )
+):
+  return {person_id: "Exist"}
