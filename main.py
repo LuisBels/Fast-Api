@@ -4,7 +4,7 @@ from enum import Enum
 
 # Pydantic
 from pydantic import BaseModel
-from pydantic import Field
+from pydantic import Field, EmailStr
 
 #FastAPI
 from fastapi import FastAPI
@@ -40,6 +40,7 @@ class Person(BaseModel):
     le=60,
     ge=18
   )
+  email: EmailStr
   hair_color: Optional[HairColor] = Field(default=None) 
   married: Optional[bool] = None
   
