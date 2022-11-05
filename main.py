@@ -28,19 +28,25 @@ class Person(BaseModel):
   firts_name: str = Field(
     ...,
     min_length=1,
-    max_length=50
+    max_length=50,
+    example="Luisbel"
     )
+  
   last_name: str = Field(
     ...,
     min_length=1,
-    max_length=50
+    max_length=50,
+    example = "Ramos"
   )
+  
   age: int = Field(
     ...,
     le=60,
     ge=18
   )
-  email: EmailStr
+  
+  email: EmailStr = Field(example = "luisbelr9@gmail.com")
+  
   hair_color: Optional[HairColor] = Field(default=None) 
   married: Optional[bool] = None
   
