@@ -4,7 +4,7 @@ from enum import Enum
 
 # Pydantic
 from pydantic import BaseModel
-from pydantic import Field, EmailStr
+from pydantic import Field, EmailStr, SecretStr
 
 #FastAPI
 from fastapi import FastAPI
@@ -23,8 +23,8 @@ class HairColor(Enum):
 class Location(BaseModel):
   state: str
   country: str
-
-class Person(BaseModel):
+  
+class BasePerson(BaseModel):
   firts_name: str = Field(
     ...,
     min_length=1,
@@ -46,9 +46,13 @@ class Person(BaseModel):
   )
   
   email: EmailStr = Field(example = "luisbelr9@gmail.com")
-  
   hair_color: Optional[HairColor] = Field(default=None) 
   married: Optional[bool] = None
+ 
+  
+
+class Person(BasePerson):
+  password: SecretStr = Field(min_length=8, title="Password")
   
 
 @app.get("/")
@@ -61,7 +65,7 @@ def cuidades():
 
 # Request and Response body
 
-@app.post("/person/new")
+@app.post("/person/new", response_model=BasePerson)
 def create_person(person: Person = Body()):
   return person
 
@@ -100,7 +104,7 @@ def update_person(
         description="This is the person ID",
         gt= 0
     ),
-    person : Person = Body(...),
+    person : BasePerson = Body(...),
     location : Location = Body(...)
 ):
     # Forma de hacerlo actualizando 
